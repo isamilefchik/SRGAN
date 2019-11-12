@@ -9,7 +9,7 @@ class SRGAN_Generator(tf.keras.Model):
 
         # Pre-residual encoding
         self.conv1 = layers.Conv2D( \
-                filters=64, kernel_size=9, strides=1)
+                filters=64, kernel_size=9, strides=1, padding='same')
         self.prelu1 = layers.PReLU()
 
         # Res-blocks
@@ -19,22 +19,22 @@ class SRGAN_Generator(tf.keras.Model):
 
         # Final residual connection block
         self.conv2 = layers.Conv2D( \
-                filters=64, kernel_size=3, strides=1)
+                filters=64, kernel_size=3, strides=1, padding='same')
         self.bn2 = layers.BatchNormalization()
 
         # Pixel shuffle 1
         self.conv3 = layers.Conv2D( \
-                filters=256, kernel_size=3, strides=1)
+                filters=256, kernel_size=3, strides=1, padding='same')
         self.prelu3 = layers.PReLU()
 
         # Pixel shuffle 2
         self.conv4 = layers.Conv2D( \
-                filters=256, kernel_size=3, strides=1)
+                filters=256, kernel_size=3, strides=1, padding='same')
         self.prelu4 = layers.PReLU()
 
         # Get three channel output
         self.conv5 = layers.Conv2D( \
-                filters=3, kernel_size=3, strides=1)
+                filters=3, kernel_size=3, strides=1, padding='same')
 
     def call(self, input_tensor, training=False):
         """ Call routine of model. """
@@ -79,12 +79,12 @@ class GenResBlock(tf.keras.Model):
         super(GenResBlock, self).__init__(name='')
 
         self.conv1 = layers.Conv2D( \
-                filters=64, kernel_size=3, strides=1)
+                filters=64, kernel_size=3, strides=1, padding='same')
         self.bn1 = layers.BatchNormalization()
         self.prelu1 = layers.PReLU()
 
         self.conv2 = layers.Conv2D( \
-                filters=64, kernel_size=3, strides=1)
+                filters=64, kernel_size=3, strides=1, padding='same')
         self.bn2 = layers.BatchNormalization()
 
     def call(self, input_tensor, training=False):
@@ -112,7 +112,7 @@ class SRGAN_Discriminator(tf.keras.Model):
 
         # Initial encoding
         self.conv1 = layers.Conv2D( \
-                filters=64, kernel_size=3, strides=1)
+                filters=64, kernel_size=3, strides=1, padding='same')
         self.lrelu1 = layers.LeakyReLU(alpha=0.2)
 
         # Discriminator convolutional blocks
@@ -158,7 +158,7 @@ class DiscBlock(tf.keras.Model):
         super(DiscBlock, self).__init__(name='')
 
         self.conv = layers.Conv2D( \
-                filters=filters, kernel_size=3, strides=strides)
+                filters=filters, kernel_size=3, strides=strides, padding='same')
         self.bn = layers.BatchNormalization()
         self.lrelu = layers.LeakyReLU(alpha=0.2)
 
