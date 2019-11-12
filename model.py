@@ -125,6 +125,9 @@ class SRGAN_Discriminator(tf.keras.Model):
                 DiscBlock(512, 1), \
                 DiscBlock(512, 2)]
 
+        # Flatten tensor for dense layers
+        self.flatten = layers.Flatten()
+
         # Final dense layers
         self.dense2 = layers.Dense(1024)
         self.lrelu2 = layers.LeakyReLU(alpha=0.2)
@@ -140,6 +143,9 @@ class SRGAN_Discriminator(tf.keras.Model):
         # Pass through discriminator convolutional blocks
         for block in self.discblocks:
             x = block(x, training=training)
+
+        # Flatten tensor for dense layers
+        x = self.flatten(x)
 
         # Final dense layers
         x = self.dense2(x)
