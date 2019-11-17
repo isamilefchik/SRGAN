@@ -5,7 +5,7 @@
 
 ![Network architecture](./img/architecture.png)
 
-### Usage:
+### (Planned) Usage:
 
 Training:
 
