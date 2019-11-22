@@ -58,7 +58,9 @@ def main():
             sys.exit("Checkpoint directory does not exist.")
 
     if args.train:
-        train(gen_model, disc_model, args.epochs, checkpoint_manager)
+        if args.data is None:
+            sys.exit("Must provide data folder for training.")
+        train(gen_model, disc_model, args.data, args.epochs, checkpoint_manager)
 
     if args.infer is not None:
         if path.exists(args.infer):
@@ -66,12 +68,12 @@ def main():
         else:
             sys.exit("Inference image does not exist.")
 
-def train(gen_model, disc_model, epochs, checkpoint_manager):
+def train(gen_model, disc_model, data, epochs, checkpoint_manager):
     """ Training routine. """
 
     for epoch in range(1, epochs + 1):
         print("============== EPOCH {} ==============".format(epoch))
-        train_GAN(gen_model, disc_model)
+        train_GAN(gen_model, disc_model, data)
         checkpoint_manager.save()
 
 def infer(img_path, gen_model):

@@ -2,10 +2,10 @@ from matplotlib import pyplot as plt
 import tensorflow as tf
 import preprocess
 
-def train_GAN(gen_model, disc_model):
+def train_GAN(gen_model, disc_model, data):
 
     # Images used in this epoch, selected at random
-    img_ds = preprocess.get_image_set("./DIV2K_train_LR_bicubic/X4/", 400)
+    img_ds = preprocess.get_image_set(data, 400)
 
     train_ds = preprocess.get_batches(img_ds, 32)
 
