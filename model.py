@@ -6,22 +6,26 @@ from tensorflow.keras import layers
 import tensorflow.keras.applications.vgg19 as vgg19
 
 # ===========================================================================
-# GENERATOR
+#                                GENERATOR
 # ===========================================================================
 
 class SRGAN_Generator(tf.keras.Model):
     """ Defines the generator network of SRGAN. """
 
-    def __init__(self, B):
+    def __init__(self, B, learning_rate=1e-4):
         super(SRGAN_Generator, self).__init__(name='')
 
         # Loss:
-        # ===============
+        # =========================================
 
         self.content_loss_model = self._init_content_loss_model()
 
+        # Optimizer:
+        # =========================================
+        self.optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
+
         # Layers:
-        # ===============
+        # =========================================
 
         # Pre-residual encoding
         self.conv1 = layers.Conv2D( \
@@ -128,6 +132,7 @@ class SRGAN_Generator(tf.keras.Model):
         return tf.keras.losses.BinaryCrossentropy(from_logits=False) \
                 (tf.ones_like(disc_output), disc_output)
 
+
     def loss_fn(self, output_image, true_image, disc_output):
         """ Loss function for the generator network of
         SRGAN. """
@@ -136,7 +141,7 @@ class SRGAN_Generator(tf.keras.Model):
                 # + (1e-3 * self.adversarial_loss(disc_output))
         return tf.reduce_sum(tf.keras.losses.MSE(true_image, output_image)) \
                 + (1e-3 * self._adversarial_loss(disc_output)) \
-                + (5e-4 * self._content_loss(output_image, true_image))
+                + (5e-2 * self._content_loss(output_image, true_image))
 
 
 class GenResBlock(tf.keras.Model):
@@ -177,15 +182,22 @@ class GenResBlock(tf.keras.Model):
 
 
 # ===========================================================================
-# DISCRIMINATOR
+#                                DISCRIMINATOR
 # ===========================================================================
 
 
 class SRGAN_Discriminator(tf.keras.Model):
     """ Defines the discriminator network of SRGAN. """
 
-    def __init__(self):
+    def __init__(self, learning_rate=1e-6):
         super(SRGAN_Discriminator, self).__init__(name='')
+
+        # Optimizer:
+        # =========================================
+        self.optimizer = tf.keras.optimizers.Adam(learning_rate=learning_rate)
+
+        # Layers:
+        # =========================================
 
         # Initial encoding
         self.conv1 = layers.Conv2D( \
