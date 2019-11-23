@@ -1,6 +1,6 @@
+""" Preprocessing functions for SRGAN. """
+
 import os
-import random
-import numpy as np
 import tensorflow as tf
 AUTOTUNE = tf.data.experimental.AUTOTUNE
 

@@ -139,8 +139,8 @@ class SRGAN_Generator(tf.keras.Model):
 
         # return self.content_loss(output_image, true_image) \
                 # + (1e-3 * self.adversarial_loss(disc_output))
-        return (1e-2 * tf.reduce_sum(tf.keras.losses.MSE(true_image, output_image))) \
-                + (1e-3 * self._adversarial_loss(disc_output)) \
+        return (1e-3 * tf.reduce_sum(tf.keras.losses.MSE(true_image, output_image))) \
+                + (1e-2 * self._adversarial_loss(disc_output)) \
                 + self._content_loss(output_image, true_image)
 
 

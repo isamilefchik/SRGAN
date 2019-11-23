@@ -6,3 +6,5 @@ DIV2K*
 checkpoints/
 old_checkpoints/
 output.png
+gcp_checkpoints/
+./*.png

@@ -1,8 +1,18 @@
-from matplotlib import pyplot as plt
+""" Training functions for SRGAN. """
+
 import tensorflow as tf
 import preprocess
 
 def train_GAN(gen_model, disc_model, data):
+    """ Training procedure for SRGAN.
+
+    Args:
+        gen_model: The SRGAN_Generator network.
+        disc_model: The SRGAN_Discriminator network.
+        data_folder: The folder containing .png images for training.
+
+    Returns: None
+    """
 
     # Images used in this epoch, selected at random
     img_ds = preprocess.get_image_set(data, 400)
