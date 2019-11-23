@@ -17,7 +17,7 @@ def train_GAN(gen_model, disc_model, data):
     # Images used in this epoch, selected at random
     img_ds = preprocess.get_image_set(data, 400)
 
-    train_ds = preprocess.get_batches(img_ds, 32)
+    train_ds = preprocess.get_batches(img_ds, 16)
 
     for i, (input_batch, target_batch) in enumerate(train_ds):
 
