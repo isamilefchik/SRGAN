@@ -49,8 +49,8 @@ def train_GAN(gen_model, disc_model, data):
         disc_model.optimizer.apply_gradients( \
                 zip(disc_grads, disc_model.trainable_variables))
 
-        gen_progress = "Generator loss {0:.4f}".format(gen_loss)
-        disc_progress = "Discriminator loss {0:.4f}".format(disc_loss)
+        gen_progress = "Generator loss {0:.4g}".format(gen_loss)
+        disc_progress = "Discriminator loss {0:.4g}".format(disc_loss)
 
         # Print progress
         print("Batch {}:".format(i+1))
