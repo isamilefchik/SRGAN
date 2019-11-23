@@ -22,17 +22,18 @@ def main():
     args_parser.add_argument("--load", \
             help='''Checkpoint directory to load model.''')
     args_parser.add_argument("--train", \
-            help='''Trains the SRGAN model using the folder passed in as the
-            argument. If a checkpoint folder is loaded, the training process
-            will begin from the latest checkpoint. The data folder passed in
-            should only contain the full-resolution images. The lower
-            resolution images will be computed in the data processing step.
+            help='''The folder containing the data to train SRGAN on. If this
+            flag is not used and a folder is not passed, then no training
+            will occur. If a checkpoint folder is loaded using the --load flag,
+            the model will first load the latest checkpoint then begin training.
+            The data folder passed in should only contain the full-resolution images.
+            The lower resolution images will be computed in the data processing step.
             Images should be in the .png format.''')
     args_parser.add_argument("--infer", \
             help='''Run a loaded model on a given image. The argument passed
             in should be the path to the image to be upsampled by the network.''')
     args_parser.add_argument("--name", default="SRGAN", \
-            help='''Name of the model (used for model saves).''')
+            help='''Name of the model (used for model saves during training).''')
     args_parser.add_argument("--epochs", type=int, default=1000, \
             help='''Number of epochs (for training only).''')
     args = args_parser.parse_args()
