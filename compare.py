@@ -1,5 +1,4 @@
 from matplotlib import pyplot as plt
-from skimage.transform import resize
 import random
 import argparse
 from PIL import Image
@@ -32,16 +31,19 @@ def make_visual_comparison(original_image, output_image):
         fig.add_subplot(num_examples, 3, i)
         original_crop = original_image[top:bottom, left:right]
         plt.axis('off')
+        plt.title('original')
         plt.imshow(original_crop)
 
         fig.add_subplot(num_examples, 3, i+1)
         bicubic_crop = bicubic_resize[top*4:bottom*4, left*4:right*4]
         plt.axis('off')
+        plt.title('bicubic')
         plt.imshow(bicubic_crop)
 
         fig.add_subplot(num_examples, 3, i+2)
         output_crop = output_image[top*4:bottom*4, left*4:right*4]
         plt.axis('off')
+        plt.title('SRGAN')
         plt.imshow(output_crop)
 
     plt.show()
