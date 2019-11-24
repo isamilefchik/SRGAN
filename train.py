@@ -37,22 +37,22 @@ def train_GAN(gen_model, disc_model, data):
             gen_loss = gen_model.loss_fn(fake_batch, target_batch, fake_discrim)
             disc_loss = disc_model.loss_fn(true_discrim, fake_discrim)
 
-        # Calculate gradients
+        # Update weights of discriminator every other batch
+        if i % 2 == 0:
+            disc_grads = disc_tape.gradient( \
+                    disc_loss, disc_model.trainable_variables)
+            disc_model.optimizer.apply_gradients( \
+                    zip(disc_grads, disc_model.trainable_variables))
+
+        # Update weights of generator
         gen_grads = gen_tape.gradient( \
                 gen_loss, gen_model.trainable_variables)
-        disc_grads = disc_tape.gradient( \
-                disc_loss, disc_model.trainable_variables)
-
-        # Apply gradients
         gen_model.optimizer.apply_gradients( \
                 zip(gen_grads, gen_model.trainable_variables))
-        disc_model.optimizer.apply_gradients( \
-                zip(disc_grads, disc_model.trainable_variables))
-
-        gen_progress = "Generator loss {0:.4g}".format(gen_loss)
-        disc_progress = "Discriminator loss {0:.4g}".format(disc_loss)
 
         # Print progress
+        gen_progress = "Generator loss {0:.4g}".format(gen_loss)
+        disc_progress = "Discriminator loss {0:.4g}".format(disc_loss)
         print("Batch {}:".format(i+1))
         print("|----> " + gen_progress)
         print("|----> " + disc_progress)
