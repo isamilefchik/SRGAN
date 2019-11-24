@@ -34,4 +34,6 @@ python3 main.py --infer scale_me.png --load ./checkpoints
 
 ### Current results:
 
+![comparison](./img/comparison_2.png)
+
 ![comparison](./img/comparison.png)
