@@ -37,6 +37,10 @@ def train_GAN(gen_model, disc_model, data):
             gen_loss = gen_model.loss_fn(fake_batch, target_batch, fake_discrim)
             disc_loss = disc_model.loss_fn(true_discrim, fake_discrim)
 
+        # Calculate generator gradients
+        gen_grads = gen_tape.gradient( \
+                gen_loss, gen_model.trainable_variables)
+
         # Update weights of discriminator every other batch
         if i % 2 == 0:
             disc_grads = disc_tape.gradient( \
@@ -45,8 +49,6 @@ def train_GAN(gen_model, disc_model, data):
                     zip(disc_grads, disc_model.trainable_variables))
 
         # Update weights of generator
-        gen_grads = gen_tape.gradient( \
-                gen_loss, gen_model.trainable_variables)
         gen_model.optimizer.apply_gradients( \
                 zip(gen_grads, gen_model.trainable_variables))
 
