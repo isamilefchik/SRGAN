@@ -53,7 +53,11 @@ def get_image_set(data_path, set_size):
 
 def _process_img_path(file_path):
     img = tf.io.read_file(file_path)
-    img = tf.io.decode_png(img, channels=3)
+
+    if file_path.endswith(".png"):
+        img = tf.io.decode_png(img, channels=3)
+    elif file_path.endswith(".jpg"):
+        img = tf.io.decode_jpg(img, channels=3)
     img = tf.cast(img, tf.float32) / 255.
     crop, small_crop = get_rand_crop(img)
     return small_crop, crop
