@@ -41,7 +41,7 @@ def get_image_set(data_path, set_size):
     """
 
     # Get file paths
-    file_path_ds = tf.data.Dataset.list_files(os.path.join(data_path, "*.png"), shuffle=True)
+    file_path_ds = tf.data.Dataset.list_files(os.path.join(data_path, "*.{png,jpg}"), shuffle=True)
 
     # Take only the size needed
     file_path_ds = file_path_ds.take(set_size)
